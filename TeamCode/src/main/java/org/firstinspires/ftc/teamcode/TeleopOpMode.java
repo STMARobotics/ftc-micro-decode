@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@TeleOp
 public class TeleopOpMode extends OpMode {
 
     private DrivetrainSubsystem drivetrainSubsystem;
@@ -30,23 +32,23 @@ public class TeleopOpMode extends OpMode {
     @Override
     public void loop() {
         double translationY = Math.copySign(Math.pow(-gamepad1.left_stick_y, 2), -gamepad1.left_stick_y);
-        double translationX = Math.copySign(Math.pow(gamepad1.left_stick_x, 2), -gamepad1.left_stick_x);
+        double translationX = Math.copySign(Math.pow(gamepad1.left_stick_x, 2), gamepad1.left_stick_x);
         double rotation = Math.copySign(Math.pow(gamepad1.right_stick_x, 2), gamepad1.right_stick_x);
 
         drivetrainSubsystem.drive(translationY, translationX, rotation);
 
-        if (gamepad1.backWasPressed()) {
+        if (gamepad1.back) {
             drivetrainSubsystem.resetYaw();
         }
 
-        if (gamepad2.aWasPressed()) {
+        if (gamepad2.a) {
             spinFlywheel = true;
         }
-        if (gamepad2.bWasPressed()) {
+        if (gamepad2.b) {
             spinFlywheel = false;
         }
         if (spinFlywheel) {
-            flywheelSubsystem.run(0.6);
+            flywheelSubsystem.run(0.5);
         } else {
             flywheelSubsystem.stop();
         }
