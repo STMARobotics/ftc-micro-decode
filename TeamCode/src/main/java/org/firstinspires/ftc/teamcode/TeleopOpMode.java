@@ -48,16 +48,18 @@ public class TeleopOpMode extends OpMode {
             spinFlywheel = false;
         }
         if (spinFlywheel) {
-            flywheelSubsystem.run(0.5);
+            flywheelSubsystem.setTargetVelocity(3000);
         } else {
             flywheelSubsystem.stop();
         }
 
-        if (gamepad2.x) {
+        if (gamepad2.x && spinFlywheel && flywheelSubsystem.isAtSpeed()) {
             indexerSubsystem.run(1);
         } else {
             indexerSubsystem.run(0);
         }
+
+        telemetry.update();
     }
 
     @Override
