@@ -78,6 +78,20 @@ public class DrivetrainSubsystem {
         backRight.setPower(backRightPower);
     }
 
+    public void driveRobotOriented(double speed, double strafe, double rotation) {
+        double denominator = Math.max(Math.abs(speed) + Math.abs(strafe) + Math.abs(rotation), 1);
+
+        double frontLeftPower = (speed + strafe + rotation) / denominator;
+        double backLeftPower = (speed - strafe + rotation) / denominator;
+        double frontRightPower = (speed - strafe - rotation) / denominator;
+        double backRightPower = (speed + strafe - rotation) / denominator;
+
+        frontLeft.setPower(frontLeftPower);
+        backLeft.setPower(backLeftPower);
+        frontRight.setPower(frontRightPower);
+        backRight.setPower(backRightPower);
+    }
+
     public void stop() {
         drive(0, 0, 0);
     }

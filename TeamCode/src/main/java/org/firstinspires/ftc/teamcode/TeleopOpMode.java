@@ -10,8 +10,6 @@ public class TeleopOpMode extends OpMode {
     private FlywheelSubsystem flywheelSubsystem;
     private IndexerSubsystem indexerSubsystem;
 
-    private boolean spinFlywheel = false;
-
     @Override
     public void init() {
         drivetrainSubsystem = new DrivetrainSubsystem(hardwareMap, telemetry);
@@ -42,21 +40,22 @@ public class TeleopOpMode extends OpMode {
         }
 
         if (gamepad2.a) {
-            spinFlywheel = true;
-        }
-        if (gamepad2.b) {
-            spinFlywheel = false;
-        }
-        if (spinFlywheel) {
+            // middle shot
             flywheelSubsystem.setTargetVelocity(3000);
+        } else if (gamepad2.x) {
+            // close shot
+            flywheelSubsystem.setTargetVelocity(2500);
+        } else if (gamepad2.b) {
+            // far shot
+            flywheelSubsystem.setTargetVelocity(4000);
         } else {
             flywheelSubsystem.stop();
         }
 
-        if (gamepad2.x && spinFlywheel && flywheelSubsystem.isAtSpeed()) {
+        if (flywheelSubsystem.isAtSpeed()) {
             indexerSubsystem.run(1);
         } else {
-            indexerSubsystem.run(0);
+            indexerSubsystem.stop();
         }
 
         telemetry.update();

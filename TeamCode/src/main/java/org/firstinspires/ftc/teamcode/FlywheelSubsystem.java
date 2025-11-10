@@ -33,7 +33,7 @@ public class FlywheelSubsystem {
         telemetry.addData("flywheel speed", flywheel.getVelocity() * 60.0 / 28.0);
         double error = Math.abs((flywheel.getVelocity() * 60.0 / 28.0) - targetVelocity);
         telemetry.addData("error", error);
-        return error <= 100;
+        return targetVelocity > 0 && error <= 20;
     }
 
     public void setTargetVelocity(double rpm) {
